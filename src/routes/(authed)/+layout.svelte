@@ -18,6 +18,8 @@
 	<Appbar />
 	<div class="h-[93%] w-full flex">
 		<Drawer />
-		<slot />
+        <section class=" w-full h-full">
+            <slot />
+        </section>
 	</div>
 </main>
