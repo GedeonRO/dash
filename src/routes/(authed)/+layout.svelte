@@ -1,5 +1,5 @@
 <script>
-	import '../app.css';
+	import '../../app.css';
 	import { onMount } from 'svelte';
     import Appbar from '../../components/Appbar.svelte';
     import Drawer from '../../components/Drawer.svelte';
