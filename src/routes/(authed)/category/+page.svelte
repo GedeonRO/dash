@@ -1,4 +1,6 @@
 <script lang="ts">
+	import TrashIcon from "../../../components/TrashIcon.svelte";
+    import EditIcon from "../../../components/EditIcon.svelte";
     const categories : {name:string, image:string, featured:boolean}[] = [
         {
                 name:"Test",
@@ -26,7 +28,7 @@
         <button class="hover:bg-slate-500 rounded-md bg-slate-600 w-52 text-white" >Ajouter une categorie</button>
     </div>
     <div class="flex flex-col overflow-scroll no-bar w-full shadow-inner h-full">
-        <table class=" w-full " >
+        <table class="table w-full border-spacing-5 " >
             <tr class="w-full text-center font-bold">
                 <td>Nom</td>
                 <td>Image</td>
@@ -35,12 +37,17 @@
             </tr>
             {#each categories as category}
                <tr class=" w-full text-xl text-center ">
-                    <td>{category.name}</td>
+                    <td >{category.name}</td>
                     <td class="flex justify-center" >
-                        <img class=" w-10 h-10 " alt="categorie" src={category.image} loading="lazy">
+                        <img class=" w-12 h-12 " alt="categorie" src={category.image} loading="lazy">
                     </td>
                     <td>{category.featured}</td>
-                    <td></td>
+                    <td>
+                        <div class="w-full flex justify-center gap-5" >
+                            <EditIcon/>
+                            <TrashIcon/>
+                        </div>
+                    </td>
                </tr> 
             {/each}
         </table>
