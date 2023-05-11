@@ -37,7 +37,7 @@
                <tr class=" w-full text-xl text-center ">
                     <td>{category.name}</td>
                     <td class="flex justify-center" >
-                        <img class=" w-10 h-10 " alt="image" src={category.image} loading="lazy">
+                        <img class=" w-10 h-10 " alt="image de la categorie" src={category.image} loading="lazy">
                     </td>
                     <td>{category.featured}</td>
                     <td></td>
