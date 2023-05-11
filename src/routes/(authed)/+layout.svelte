@@ -5,6 +5,7 @@
     import { goto } from '$app/navigation';
     import SideBar from '../../components/SideBar.svelte';
     import Header from '../../components/Header.svelte';
+    import GlobalLoading from '../../modals/GlobalLoading.svelte';
 	onMount(() => {
 		if (browser) {
 			if (!localStorage.getItem('token')) {
@@ -14,6 +15,8 @@
 	});
 </script>
 
+
+<GlobalLoading/>
 <main class=" w-full h-screen flex">
     <section class="h-full w-[15%]">
         <SideBar/>
