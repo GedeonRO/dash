@@ -4,6 +4,7 @@
     import { browser } from '$app/environment';
     import { goto } from '$app/navigation';
     import SideBar from '../../components/SideBar.svelte';
+    import Header from '../../components/Header.svelte';
 	onMount(() => {
 		if (browser) {
 			if (!localStorage.getItem('token')) {
@@ -18,6 +19,9 @@
         <SideBar/>
     </section>
     <section class=" bg-gray-200 h-full w-[85%]">
-        <slot/>
+        <Header/>
+        <section class=" h-[90%] ">
+            <slot/>
+        </section>
     </section>
 </main>
