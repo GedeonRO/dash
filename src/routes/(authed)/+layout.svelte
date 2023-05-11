@@ -1,10 +1,9 @@
-<script>
+<script lang="ts">
 	import '../../app.css';
 	import { onMount } from 'svelte';
-    import Appbar from '../../components/Appbar.svelte';
-    import Drawer from '../../components/Drawer.svelte';
     import { browser } from '$app/environment';
     import { goto } from '$app/navigation';
+    import SideBar from '../../components/SideBar.svelte';
 	onMount(() => {
 		if (browser) {
 			if (!localStorage.getItem('token')) {
@@ -14,12 +13,11 @@
 	});
 </script>
 
-<main class=" w-full h-screen">
-	<Appbar />
-	<div class="h-[93%] w-full flex">
-		<Drawer />
-        <section class=" w-full h-full">
-            <slot />
-        </section>
-	</div>
+<main class=" w-full h-screen flex">
+    <section class="h-full w-[15%]">
+        <SideBar/>
+    </section>
+    <section class=" bg-gray-200 h-full w-[85%]">
+        <slot/>
+    </section>
 </main>

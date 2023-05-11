@@ -33,7 +33,6 @@
             }
         if(response.status===200){
                 const data = await response.json() as { token: string }
-                alert(data.token)
                 localStorage.setItem("token", data.token)
                 goto("/")
             }
