@@ -6,8 +6,6 @@
 	import { onMount } from 'svelte';
 	import type { Category } from '$lib/types';
 	import { goto } from '$app/navigation';
-	import LoadingIcon from '../../../components/LoadingIcon.svelte';
-	import CreateCategory from '../../../modals/CreateCategory.svelte';
 	let data: Array<Category> = [];
 	let error = false;
     const api_url = 'https://goodness-api.onrender.com/category/';

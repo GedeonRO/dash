@@ -4,7 +4,7 @@
 
 {#if !$loading_hidden}
 	<div
-		class="absolute z-30 flex flex-col w-full h-screen cursor-not-allowed items-center justify-center"
+		class="absolute z-30 bg-slate-400 bg-opacity-60 flex flex-col w-full h-screen cursor-not-allowed items-center justify-center"
 	>
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -12,7 +12,7 @@
 			viewBox="0 0 24 24"
 			stroke-width="1.5"
 			stroke="currentColor"
-			class="w-6 h-6 animate-spin"
+			class="w-6 h-6 animate-spin "
 		>
 			<path
 				stroke-linecap="round"
