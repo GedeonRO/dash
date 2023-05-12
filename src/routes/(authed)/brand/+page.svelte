@@ -4,11 +4,11 @@
 	import Switch from '../../../components/Switch.svelte';
 	import { loading_hidden } from '$lib/store';
 	import { onMount } from 'svelte';
-	import type { SubCategory } from '$lib/types';
+	import type { Brand } from '$lib/types';
 	import { goto } from '$app/navigation';
-	let data: Array<SubCategory> = [];
+	let data: Array<Brand> = [];
 	let error = false;
-    const api_url = 'https://goodness-api.onrender.com/subcategory/';
+    const api_url = 'https://goodness-api.onrender.com/brand/';
     async function load_data(){
 		loading_hidden.set(false);
 		const response = await fetch(api_url);
@@ -18,7 +18,7 @@
 			return;
 		}
 		if (response.status === 200) {
-			const server_data = (await response.json()) as { data: SubCategory[] };
+			const server_data = (await response.json()) as { data: Brand[] };
 			data = server_data.data;
             loading_hidden.set(true)
 			return;
@@ -28,7 +28,7 @@
         await load_data()
 	});
     
-    async function delete_subcategory( id:string ){
+    async function delete_brand( id:string ){
             loading_hidden.set(false)
             const response = await fetch(
                 api_url,
@@ -64,7 +64,7 @@
 	<div class="flex justify-between w-full">
 		<input type="text" placeholder="Recherche" class="rounded-md p-2 w-96" />
 		<button class="hover:bg-slate-500 rounded-md bg-slate-600 w-52 text-white"
-			>Ajouter une sous categorie</button
+			>Ajouter une marque</button
 		>
 	</div>
 	<div class="flex flex-col overflow-scroll no-bar w-full shadow-inner h-full">
@@ -78,31 +78,27 @@
 							<td>Nom</td>
 							<td>Image</td>
 							<td>Featured</td>
-							<td>Categorie</td>
 							<td>Actions</td>
 						</tr>
 					</thead>
 					<tbody>
-						{#each data as subcategory}
+						{#each data as brand}
 							<tr class=" w-full text-xl border-b-2 border-slate-300">
-								<td class="py-5">{subcategory.name}</td>
+								<td class="py-5">{brand.name}</td>
 								<td class="">
-									<img class=" w-12 h-12" alt="categorie" src={subcategory.image} loading="lazy" />
+									<img class=" w-12 h-12" alt="categorie" src={brand.image} loading="lazy" />
 								</td>
 								<td>
-                                    <button on:click={ ()=>{ toggle_featured( subcategory.id, subcategory.featured ) } }>
-                                        <Switch toggled={subcategory.featured} />
+                                    <button on:click={ ()=>{ toggle_featured( brand.id, brand.featured ) } }>
+                                        <Switch toggled={brand.featured} />
                                     </button>
 								</td>
-                                <td>
-                                    {subcategory.category_data.name}
-                                </td>
 								<td>
 									<div class="flex gap-5">
                                         <button on:click={ ()=>{  } }>
                                             <EditIcon />
                                         </button>
-                                        <button on:click={ ()=>{ delete_subcategory(subcategory.id) } }>
+                                        <button on:click={ ()=>{ delete_brand(brand.id) } }>
                                             <TrashIcon />
                                         </button>
 									</div>

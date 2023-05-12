@@ -10,7 +10,11 @@ export type SubCategory = {
     name: string,
     featured: boolean,
     image: string,
-    category: string
+    category: string,
+    category_data:{
+        id: string,
+        name: string
+    }
 }
 
 export type Item = {
