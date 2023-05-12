@@ -87,7 +87,7 @@
 							<tr class=" w-full text-xl border-b-2 border-slate-300">
 								<td class="py-5">{subcategory.name}</td>
 								<td class="">
-									<img class=" w-12 h-12" alt="categorie" src={subcategory.image} loading="lazy" />
+									<img class=" w-12 h-12" alt="img" src={subcategory.image} loading="lazy" />
 								</td>
 								<td>
                                     <button on:click={ ()=>{ toggle_featured( subcategory.id, subcategory.featured ) } }>
