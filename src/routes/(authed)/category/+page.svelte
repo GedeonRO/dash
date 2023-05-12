@@ -6,8 +6,6 @@
 	import { onMount } from 'svelte';
 	import type { Category } from '$lib/types';
 	import { goto } from '$app/navigation';
-	import LoadingIcon from '../../../components/LoadingIcon.svelte';
-	import CreateCategory from '../../../modals/CreateCategory.svelte';
 	let data: Array<Category> = [];
 	let error = false;
     const api_url = 'https://goodness-api.onrender.com/category/';
@@ -49,10 +47,18 @@
             if(response.status===404) await load_data()
             if(response.status===200) await load_data()
         }
-    async function toggle_featured( id:string ){
+    async function toggle_featured( id:string, featured: boolean ){
             loading_hidden.set(false)
-        }
-</script>
+            await fetch(api_url,{
+                    method:"PUT",
+                    headers:{
+                            "Authorization":localStorage.getItem("token")!,
+                            "Content-Type":"application/json"
+                        },
+                        body:JSON.stringify({ id, featured:!featured })
+                })
+            await load_data()
+        }</script>
 
 <div class="w-full h-full p-2 flex flex-col gap-5">
 	<div class="flex justify-between w-full">
@@ -83,7 +89,9 @@
 									<img class=" w-12 h-12" alt="categorie" src={category.image} loading="lazy" />
 								</td>
 								<td>
-									<Switch toggled={category.featured} />
+                                    <button on:click={ ()=>{ toggle_featured( category.id, category.featured ) } }>
+                                        <Switch toggled={category.featured} />
+                                    </button>
 								</td>
 								<td>
 									<div class="flex gap-5">

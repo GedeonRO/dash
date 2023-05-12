@@ -47,8 +47,17 @@
             if(response.status===404) await load_data()
             if(response.status===200) await load_data()
         }
-    async function toggle_featured( id:string ){
+    async function toggle_featured( id:string, featured: boolean ){
             loading_hidden.set(false)
+            await fetch(api_url,{
+                    method:"PUT",
+                    headers:{
+                            "Authorization":localStorage.getItem("token")!,
+                            "Content-Type":"application/json"
+                        },
+                        body:JSON.stringify({ id, featured })
+                })
+            await load_data()
         }
 </script>
 
