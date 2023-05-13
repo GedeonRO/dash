@@ -7,6 +7,7 @@
     import Header from '../../components/Header.svelte';
     import GlobalLoading from '../../modals/GlobalLoading.svelte';
 	import CreateCategory from '../../modals/CreateCategory.svelte';
+    import EditCategory from '../../modals/EditCategory.svelte';
 	onMount(() => {
 		if (browser) {
 			if (!localStorage.getItem('token')) {
@@ -19,7 +20,7 @@
 
 <GlobalLoading/>
 <CreateCategory/>
-
+<EditCategory/>
 
 <main class=" w-full h-screen flex">
     <section class="h-full w-[15%]">

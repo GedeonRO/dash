@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { show_create_category } from '$lib/store';
+	import { show_edit_category } from '$lib/store';
 	import CloseIcon from '../components/CloseIcon.svelte';
 	import LoadingIcon from '../components/LoadingIcon.svelte';
 	import { goto } from '$app/navigation';
@@ -58,13 +58,13 @@
 	}
 </script>
 
-{#if $show_create_category}
+{#if $show_edit_category}
 	<div class="absolute z-30 flex flex-col w-full h-screen items-center justify-center">
 		<div class="shadow-2xl shadow-black h-[350px] w-[700px] rounded-md bg-slate-400 flex flex-col">
 			<div class=" flex justify-around items-center p-1 mb-10">
 				<button
 					on:click={() => {
-						show_create_category.set(false);
+						show_edit_category.set(false);
 					}}
 					class=" text-white rounded-full border-2"
 				>

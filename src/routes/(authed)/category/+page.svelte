@@ -2,7 +2,7 @@
 	import TrashIcon from '../../../components/TrashIcon.svelte';
 	import EditIcon from '../../../components/EditIcon.svelte';
 	import Switch from '../../../components/Switch.svelte';
-	import { loading_hidden } from '$lib/store';
+	import { loading_hidden, show_edit_category } from '$lib/store';
 	import { onMount } from 'svelte';
 	import type { Category } from '$lib/types';
 	import { goto } from '$app/navigation';
@@ -97,7 +97,7 @@
 								</td>
 								<td>
 									<div class="flex gap-5">
-                                        <button on:click={ ()=>{  } }>
+                                        <button on:click={ ()=>{ show_edit_category.set(true) } }>
                                             <EditIcon />
                                         </button>
                                         <button on:click={ ()=>{ delete_category(category.id) } }>
