@@ -28,7 +28,7 @@
 	];
 </script>
 
-<div class="h-full w-full bg-slate-600 text-white flex flex-col px-5">
+<div class="h-full w-full bg-slate-800 text-white flex flex-col px-5">
 	<div class=" h-[10%] w-full">
 		<h1>LOGO</h1>
 		<h1>GoodnessUnit</h1>

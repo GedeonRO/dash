@@ -60,6 +60,7 @@
             await load_data()
         }</script>
 
+
 <div class="w-full h-full p-2 flex flex-col gap-5">
 	<div class="flex justify-between w-full">
 		<input type="text" placeholder="Recherche" class="rounded-md p-2 w-96" />
