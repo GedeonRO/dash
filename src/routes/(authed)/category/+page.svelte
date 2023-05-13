@@ -6,6 +6,7 @@
 	import { onMount } from 'svelte';
 	import type { Category } from '$lib/types';
 	import { goto } from '$app/navigation';
+    import { show_create_category } from '$lib/store';
 	let data: Array<Category> = [];
 	let error = false;
     const api_url = 'https://goodness-api.onrender.com/category/';
@@ -64,7 +65,7 @@
 <div class="w-full h-full p-2 flex flex-col gap-5">
 	<div class="flex justify-between w-full">
 		<input type="text" placeholder="Recherche" class="rounded-md p-2 w-96" />
-		<button class="hover:bg-slate-500 rounded-md bg-slate-600 w-52 text-white"
+		<button on:click={ ()=>{ show_create_category.set(true) } } class="hover:bg-slate-500 rounded-md bg-slate-600 w-52 text-white"
 			>Ajouter une categorie</button
 		>
 	</div>
