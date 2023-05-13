@@ -7,6 +7,7 @@
 	import type { Category } from '$lib/types';
 	import { goto } from '$app/navigation';
     import { show_create_category } from '$lib/store';
+	import { cat_being_edited } from '$lib/utils_store';
 	let data: Array<Category> = [];
 	let error = false;
     const api_url = 'https://goodness-api.onrender.com/category/';
@@ -97,7 +98,11 @@
 								</td>
 								<td>
 									<div class="flex gap-5">
-                                        <button on:click={ ()=>{ show_edit_category.set(true) } }>
+                                        <button on:click={ ()=>{ 
+                                                cat_being_edited.set({ name:category.name, featured: category.featured, id: category.id })
+                                                console.log($cat_being_edited)
+                                                show_edit_category.set(true)
+                                            } }>
                                             <EditIcon />
                                         </button>
                                         <button on:click={ ()=>{ delete_category(category.id) } }>
