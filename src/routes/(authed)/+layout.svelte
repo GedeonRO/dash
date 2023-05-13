@@ -10,6 +10,8 @@
     import EditCategory from '../../modals/EditCategory.svelte';
 	import EditSubCat from '../../modals/EditSubCat.svelte';
 	import CreateSubCat from '../../modals/CreateSubCat.svelte';
+	import CreateBrand from '../../modals/CreateBrand.svelte';
+	import EditBrand from '../../modals/EditBrand.svelte';
 	onMount(() => {
 		if (browser) {
 			if (!localStorage.getItem('token')) {
@@ -22,9 +24,11 @@
 
 <GlobalLoading/>
 <CreateCategory/>
-<CreateSubCat/>
 <EditCategory/>
+<CreateSubCat/>
 <EditSubCat/>
+<CreateBrand/>
+<EditBrand/>
 
 <main class=" w-full h-screen flex">
     <section class="h-full w-[15%]">

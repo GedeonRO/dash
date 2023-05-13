@@ -5,21 +5,16 @@
 	import { goto } from '$app/navigation';
 	import { subcat_being_edited } from '$lib/utils_store';
 	import { onMount } from 'svelte';
-    import type { Category } from '$lib/types';
 	const api_url = 'https://goodness-api.onrender.com/subcategory';
 	let name : string;
 	let featured : boolean ;
 	let image: undefined | string;
 	let image_input: HTMLInputElement;
 	let loading = false;
-    let data : Category[] = []
     let category : string
     onMount(async ()=>{
-            console.log($subcat_being_edited)
             name = $subcat_being_edited.name
             featured = $subcat_being_edited.featured
-            const server_data = await fetch("https://goodness-api.onrender.com/category").then(async res=> await res.json() as { data: Category[] } )
-            data = server_data.data
         })
 
 	async function update() {

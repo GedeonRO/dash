@@ -8,7 +8,6 @@
 	import { goto } from '$app/navigation';
     import { show_create_subcategory } from '$lib/store';
 	import { subcat_being_edited } from '$lib/utils_store';
-	import CreateSubCat from '../../../modals/CreateSubCat.svelte';
 	let data: Array<SubCategory> = [];
 	let error = false;
 	const api_url = 'https://goodness-api.onrender.com/subcategory/';

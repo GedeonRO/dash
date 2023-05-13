@@ -2,10 +2,12 @@
 	import TrashIcon from '../../../components/TrashIcon.svelte';
 	import EditIcon from '../../../components/EditIcon.svelte';
 	import Switch from '../../../components/Switch.svelte';
-	import { loading_hidden } from '$lib/store';
+	import { loading_hidden, show_edit_brand } from '$lib/store';
 	import { onMount } from 'svelte';
 	import type { Brand } from '$lib/types';
 	import { goto } from '$app/navigation';
+    import { show_create_brand } from '$lib/store';
+    import { brand_being_edited } from '$lib/utils_store';
 	let data: Array<Brand> = [];
 	let error = false;
     const api_url = 'https://goodness-api.onrender.com/brand/';
@@ -63,7 +65,7 @@
 <div class="w-full h-full p-2 flex flex-col gap-5">
 	<div class="flex justify-between w-full">
 		<input type="text" placeholder="Recherche" class="rounded-md p-2 w-96" />
-		<button class="hover:bg-slate-500 rounded-md bg-slate-600 w-52 text-white"
+		<button on:click={ ()=>{ show_create_brand.set(true) } } class="hover:bg-slate-500 rounded-md bg-slate-600 w-52 text-white"
 			>Ajouter une marque</button
 		>
 	</div>
@@ -95,7 +97,13 @@
 								</td>
 								<td>
 									<div class="flex gap-5">
-                                        <button on:click={ ()=>{  } }>
+                                        <button on:click={ ()=>{ 
+                                                $brand_being_edited.name = brand.name
+                                                $brand_being_edited.featured = brand.featured
+                                                $brand_being_edited.id = brand.id
+                                                console.log($brand_being_edited, "1")
+                                                show_edit_brand.set(true)
+                                            } }>
                                             <EditIcon />
                                         </button>
                                         <button on:click={ ()=>{ delete_brand(brand.id) } }>
