@@ -1,14 +1,28 @@
-<script lang="ts">
+<script lang="ts" >
 	import Switch from '../components/Switch.svelte';
 	import { show_create_category } from '$lib/store';
 	import CloseIcon from '../components/CloseIcon.svelte';
-	async function create() {}
-	let error = '';
+    const api_url = "https://goodness-api.onrender.com/category"
+    let name = ""
+    let featured = true
+    let image = ""
+	async function create() {
+            const response = await fetch(
+                api_url,
+                {
+                        headers:{
+                                "Authorization":localStorage.getItem("token")!,
+                                "Content-Type":"application/json"
+                            },
+                            body:JSON.stringify({ name, featured })
+                    }
+            )
+        }
 </script>
 
 {#if $show_create_category}
 	<div class="absolute z-30 flex flex-col w-full h-screen items-center justify-center">
-		<div class="h-[500px] w-[700px] border-2 rounded-md bg-slate-400 flex flex-col">
+		<div class="shadow-2xl shadow-black h-[350px] w-[700px] rounded-md bg-slate-400 flex flex-col">
 			<div class=" flex justify-around items-center p-1 mb-10">
 				<button
 					on:click={() => {
@@ -25,17 +39,38 @@
 				class=" w-full flex flex-col items-center gap-2 text-xl"
 			>
 				<div class="w-[80%] flex gap-5 items-center justify-between">
-					<h1 class="w-[40%]">Nom de la categorie</h1>
-					<input type="text" class="focus:outline-none w-[50%] rounded-md p-1" placeholder="" />
+					<h1 class="text-white w-[40%]">Nom de la categorie</h1>
+					<input
+                        bind:value={name}
+						required
+						type="text"
+						class="focus:outline-none w-[50%] rounded-md p-1"
+						placeholder=""
+					/>
 				</div>
 				<div class="w-[80%] flex gap-5 items-center justify-between">
-					<h1 class="w-[40%]">Afficher la categorie</h1>
-					<input type="text" class="focus:outline-none w-[50%] rounded-md p-1" placeholder="" />
+					<h1 class="text-white w-[40%]">Afficher</h1>
+					<label class="relative inline-flex items-center w-[50%] cursor-pointer">
+						<input bind:checked={featured} type="checkbox" value="" class="sr-only peer" />
+						<div
+							class="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"
+						/>
+					</label>
 				</div>
 				<div class="w-[80%] flex gap-5 items-center justify-between">
-					<h1 class="w-[40%]">Image</h1>
-					<input type="file" class="w-[50%] rounded-md p-1" placeholder="" />
+					<h1 class="text-white w-[40%]">Image</h1>
+					<input
+                        bind:value={image}
+						required
+						type="file"
+                        accept="image/*"
+						class="focus:outline-none w-[50%] rounded-md p-1"
+						placeholder=""
+					/>
 				</div>
+                <button class="bg-slate-700 text-white p-2 rounded-md" >
+                    <h1>Valider</h1>
+                </button>
 			</form>
 		</div>
 	</div>
