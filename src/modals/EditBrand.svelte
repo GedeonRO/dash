@@ -11,7 +11,6 @@
 	let image: undefined | string;
 	let image_input: HTMLInputElement;
 	let loading = false;
-    let category : string
     onMount(()=>{
             name = $brand_being_edited.name
             featured = $brand_being_edited.featured

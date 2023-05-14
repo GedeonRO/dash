@@ -15,7 +15,7 @@
 		},
 		{
 			title: 'Items',
-			path: '/items'
+			path: '/item'
 		},
 		{
 			title: 'Produits',

@@ -21,8 +21,13 @@ export type Item = {
     id: string,
     name: string,
     featured: boolean,
-    sub_category: string,
-    schema: string
+    image: string,
+    subcategory: string,
+    schema: string,
+    subcategory_data:{
+        id: string,
+        name: string
+    }
 }
 
 export type Brand = {
