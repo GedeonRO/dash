@@ -13,3 +13,5 @@ export const show_edit_brand = writable(false)
 export const show_edit_item = writable(false)
 export const show_edit_product = writable(false)
 export const show_see_schema = writable(false)
+
+export const current_schema = writable([]as Array<{name:string, type:string}>)

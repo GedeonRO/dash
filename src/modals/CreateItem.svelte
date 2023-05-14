@@ -71,6 +71,9 @@
 	}
 </script>
 
+
+
+
 {#if show_create_schema}
 	<div class="absolute z-50 flex flex-col w-full h-screen items-center justify-center">
 		<div class="shadow-2xl shadow-black h-[500px] w-[500px] rounded-md bg-slate-400 flex flex-col">

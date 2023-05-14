@@ -14,6 +14,7 @@
 	import EditBrand from '../../modals/EditBrand.svelte';
     import CreateItem from '../../modals/CreateItem.svelte';
 	import EditItem from '../../modals/EditItem.svelte';
+	import SeeSchema from '../../modals/SeeSchema.svelte';
 	onMount(() => {
 		if (browser) {
 			if (!localStorage.getItem('token')) {
@@ -33,6 +34,7 @@
 <EditBrand/>
 <CreateItem/>
 <EditItem/>
+<SeeSchema/>
 
 <main class=" w-full h-screen flex">
     <section class="h-full w-[15%]">

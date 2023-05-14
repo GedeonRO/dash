@@ -3,12 +3,13 @@
 	import EditIcon from '../../../components/EditIcon.svelte';
 	import Switch from '../../../components/Switch.svelte';
 	import EyeIcon from '../../../components/EyeIcon.svelte';
-	import { loading_hidden, show_edit_item, show_see_schema } from '$lib/store';
+	import { current_schema, loading_hidden, show_edit_item, show_see_schema } from '$lib/store';
 	import { onMount } from 'svelte';
 	import type { Item } from '$lib/types';
 	import { goto } from '$app/navigation';
     import { show_create_item } from '$lib/store';
 	import { item_being_edited } from '$lib/utils_store';
+	import { parse } from 'postcss';
 	let data: Array<Item> = [];
 	let error = false;
 	const api_url = 'https://goodness-api.onrender.com/item/';
@@ -70,6 +71,17 @@
 		});
 		await load_data();
 	}
+    function show_schema(str_schema:string){
+            const parsed = JSON.parse(str_schema) as { name:string, type:string }[]
+            if(parsed.length===0){
+                    alert("Cet item n'a pas de schema")
+                    return
+                }
+            current_schema.update((_)=>{
+                    return parsed
+                })
+            show_see_schema.set(true)
+        }
 </script>
 
 <div class="w-full h-full p-2 flex flex-col gap-5">
@@ -114,14 +126,8 @@
 								<td>
 									{item.subcategory_data.name}
 								</td>
-                                <td  >
-                                    <button class="flex items-center justify-start"on:click={()=>{
-                                            if(item.schema==="{}"){
-                                                    alert("Le schema de cet item est vide")
-                                                    return
-                                                }
-                                            show_see_schema.set(true)
-                                        }} >
+                                <td>
+                                    <button class="flex items-center justify-start"on:click={()=>{ show_schema(item.schema) } } >
                                         <EyeIcon/>
                                     <button/>
                                 </td>
