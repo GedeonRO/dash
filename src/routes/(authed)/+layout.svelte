@@ -12,6 +12,8 @@
 	import CreateSubCat from '../../modals/CreateSubCat.svelte';
 	import CreateBrand from '../../modals/CreateBrand.svelte';
 	import EditBrand from '../../modals/EditBrand.svelte';
+    import CreateItem from '../../modals/CreateItem.svelte';
+	import EditItem from '../../modals/EditItem.svelte';
 	onMount(() => {
 		if (browser) {
 			if (!localStorage.getItem('token')) {
@@ -29,6 +31,8 @@
 <EditSubCat/>
 <CreateBrand/>
 <EditBrand/>
+<CreateItem/>
+<EditItem/>
 
 <main class=" w-full h-screen flex">
     <section class="h-full w-[15%]">

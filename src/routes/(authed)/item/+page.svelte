@@ -3,7 +3,7 @@
 	import EditIcon from '../../../components/EditIcon.svelte';
 	import Switch from '../../../components/Switch.svelte';
 	import EyeIcon from '../../../components/EyeIcon.svelte';
-	import { loading_hidden, show_edit_item } from '$lib/store';
+	import { loading_hidden, show_edit_item, show_see_schema } from '$lib/store';
 	import { onMount } from 'svelte';
 	import type { Item } from '$lib/types';
 	import { goto } from '$app/navigation';
@@ -120,6 +120,7 @@
                                                     alert("Le schema de cet item est vide")
                                                     return
                                                 }
+                                            show_see_schema.set(true)
                                         }} >
                                         <EyeIcon/>
                                     <button/>

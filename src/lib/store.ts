@@ -12,5 +12,4 @@ export const show_edit_subcategory = writable(false)
 export const show_edit_brand = writable(false)
 export const show_edit_item = writable(false)
 export const show_edit_product = writable(false)
-
-
+export const show_see_schema = writable(false)
