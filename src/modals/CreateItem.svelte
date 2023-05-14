@@ -17,8 +17,8 @@
 	let subcategory = '';
     const schema = writable([] as {name: string, type: string}[])
 	let field_name = "";
-	let field_type = "" ;
-	let show_create_schema = true;
+	let field_type = "text" ;
+	let show_create_schema = false;
 	let data: SubCategory[] = [];
 	onMount(async () => {
 		const server_data = await fetch('https://goodness-api.onrender.com/subcategory').then(
@@ -42,7 +42,7 @@
 					image = secure_url;
 					await fetch(api_url, {
 						method: 'POST',
-						body: JSON.stringify({ name, featured, image }),
+						body: JSON.stringify({ name, featured, image, schema: JSON.stringify($schema), subcategory }),
 						headers: {
 							Authorization: localStorage.getItem('token')!,
 							'Content-Type': 'application/json'
@@ -107,7 +107,6 @@
                                     value.push({ name: field_name, type: field_type })
                                     return value
                                 })
-                            field_type=""
                             field_name=""
                         }} class=" rounded-md bg-slate-600 p-1 text-white">
 						<AddIcon />
@@ -131,6 +130,7 @@
 				</div>
 				<button
 					class="items-center p-1 hover:bg-slate-500 rounded-md bg-slate-600 w-[50%] text-white"
+                    on:click={()=>{ show_create_schema=false }}
 				>
 					<h1>Valider</h1>
 				</button>
@@ -197,12 +197,13 @@
 				<div class="w-[80%] flex gap-5 items-center justify-between">
 					<h1 class="text-white w-[40%]">Schema</h1>
 					<button
+                        type="button"
 						class="items-center p-1 hover:bg-slate-500 rounded-md bg-slate-600 w-[50%] text-white"
 						on:click={() => {
 							show_create_schema = true;
 						}}
 					>
-						<h1>Ajouter une schema</h1>
+						<h1>Ajouter un schema</h1>
 					</button>
 				</div>
 				<button class="mt-5 flex justify-center bg-slate-700 text-white p-2 rounded-md">
