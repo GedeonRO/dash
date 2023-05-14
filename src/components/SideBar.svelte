@@ -19,7 +19,7 @@
 		},
 		{
 			title: 'Produits',
-			path: '/products'
+			path: '/product'
 		},
 		{
 			title: 'Utilisateurs',

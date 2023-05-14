@@ -5,13 +5,13 @@
 	import EyeIcon from '../../../components/EyeIcon.svelte';
 	import { current_schema, loading_hidden, show_edit_item, show_see_schema } from '$lib/store';
 	import { onMount } from 'svelte';
-	import type { Item } from '$lib/types';
+	import type { Product } from '$lib/types';
 	import { goto } from '$app/navigation';
     import { show_create_item } from '$lib/store';
 	import { item_being_edited } from '$lib/utils_store';
-	let data: Array<Item> = [];
+	let data: Array<Product> = [];
 	let error = false;
-	const api_url = 'https://goodness-api.onrender.com/item/';
+	const api_url = 'https://goodness-api.onrender.com/product/';
 	async function load_data() {
 		loading_hidden.set(false);
 		await fetch(api_url)
@@ -22,7 +22,7 @@
 					return;
 				}
 				if (response.status === 200) {
-					const server_data = (await response.json()) as { data: Item[] };
+					const server_data = (await response.json()) as { data: Product[] };
 					data = server_data.data;
 					loading_hidden.set(true);
 					return;
@@ -87,7 +87,7 @@
 	<div class="flex justify-between w-full">
 		<input type="text" placeholder="Recherche" class="rounded-md p-2 w-96" />
 		<button on:click={ ()=>{ show_create_item.set(true) } } class="hover:bg-slate-500 rounded-md bg-slate-600 w-52 text-white"
-			>Ajouter un item</button
+			>Ajouter un produit</button
 		>
 	</div>
 	<div class="flex flex-col overflow-scroll no-bar w-full shadow-inner h-full">
@@ -101,47 +101,55 @@
 							<td>Nom</td>
 							<td>Image</td>
 							<td>Featured</td>
-							<td>Sous categorie</td>
+							<td>Prix</td>
+							<td>En stock</td>
+							<td>Item</td>
 							<td>Schema</td>
 							<td>Actions</td>
 						</tr>
 					</thead>
 					<tbody>
-						{#each data as item}
+						{#each data as product}
 							<tr class=" w-full text-xl border-b-2 border-slate-300">
-								<td class="py-5">{item.name}</td>
+								<td class="py-5">{product.name}</td>
 								<td class="">
-									<img class=" w-12 h-12" alt="img" src={item.image} loading="lazy" />
+									<img class=" w-12 h-12" alt="img" src={product.images} loading="lazy" />
 								</td>
 								<td>
 									<button
 										on:click={() => {
-											toggle_featured(item.id, item.featured);
+											toggle_featured(product.id, product.featured);
 										}}
 									>
-										<Switch toggled={item.featured} />
+										<Switch toggled={product.featured} />
 									</button>
 								</td>
 								<td>
-									{item.subcategory_data.name}
+									{product.price}
+								</td>
+								<td>
+									{product.in_stock}
+								</td>
+								<td>
+									{product.item_data.name}
 								</td>
                                 <td>
-                                    <button class="flex items-center justify-start"on:click={()=>{ show_schema(item.schema) } } >
+                                    <button class="flex items-center justify-start"on:click={()=>{ show_schema(product.item_data.schema) } } >
                                         <EyeIcon/>
                                     <button/>
                                 </td>
 								<td>
 									<div class="flex gap-5">
 										<button on:click={() => { 
-                                                item_being_edited.set({ name: item.name, id: item.id, featured: item.featured, 
-                                                subcategory: item.subcategory})
+                                                item_being_edited.set({ name: product.name, id: product.id, featured: product.featured, 
+                                                subcategory: product.item})
                                                 show_edit_item.set(true)
                                             }}>
 											<EditIcon />
 										</button>
 										<button
 											on:click={() => {
-												delete_item(item.id);
+												delete_item(product.id);
 											}}
 										>
 											<TrashIcon />

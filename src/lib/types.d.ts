@@ -37,6 +37,23 @@ export type Brand = {
     featured: boolean
 }
 
+export type Product = {
+    id: string,
+    name: string,
+    images: string,
+    price: number,
+    featured: boolean,
+    in_stock: number,
+    fields: string,
+    brand: string,
+    item: string,
+    item_data:{
+        id: string,
+        name: string,
+        schema: string
+    }
+}
+
 export type Slider = {
     id: string,
     name: string,
