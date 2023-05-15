@@ -51,6 +51,10 @@ export type Product = {
         id: string,
         name: string,
         schema: string
+    },
+    brand_data:{
+        id:string,
+        name:string
     }
 }
 

@@ -15,6 +15,8 @@
     import CreateItem from '../../modals/CreateItem.svelte';
 	import EditItem from '../../modals/EditItem.svelte';
 	import SeeSchema from '../../modals/SeeSchema.svelte';
+	import CreateProduct from '../../modals/CreateProduct.svelte';
+	import EditProduct from '../../modals/EditProduct.svelte';
 	onMount(() => {
 		if (browser) {
 			if (!localStorage.getItem('token')) {
@@ -35,6 +37,8 @@
 <CreateItem/>
 <EditItem/>
 <SeeSchema/>
+<CreateProduct/>
+<EditProduct/>
 
 <main class=" w-full h-screen flex">
     <section class="h-full w-[15%]">

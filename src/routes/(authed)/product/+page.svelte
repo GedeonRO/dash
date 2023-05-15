@@ -7,7 +7,7 @@
 	import { onMount } from 'svelte';
 	import type { Product } from '$lib/types';
 	import { goto } from '$app/navigation';
-    import { show_create_item } from '$lib/store';
+    import { show_create_product } from '$lib/store';
 	import { item_being_edited } from '$lib/utils_store';
 	let data: Array<Product> = [];
 	let error = false;
@@ -86,7 +86,7 @@
 <div class="w-full h-full p-2 flex flex-col gap-5">
 	<div class="flex justify-between w-full">
 		<input type="text" placeholder="Recherche" class="rounded-md p-2 w-96" />
-		<button on:click={ ()=>{ show_create_item.set(true) } } class="hover:bg-slate-500 rounded-md bg-slate-600 w-52 text-white"
+		<button on:click={ ()=>{ show_create_product.set(true) } } class="hover:bg-slate-500 rounded-md bg-slate-600 w-52 text-white"
 			>Ajouter un produit</button
 		>
 	</div>
@@ -103,8 +103,9 @@
 							<td>Featured</td>
 							<td>Prix</td>
 							<td>En stock</td>
+							<td>Marque</td>
 							<td>Item</td>
-							<td>Schema</td>
+							<td>Autre</td>
 							<td>Actions</td>
 						</tr>
 					</thead>
@@ -129,6 +130,9 @@
 								</td>
 								<td>
 									{product.in_stock}
+								</td>
+								<td>
+									{product.brand_data.name}
 								</td>
 								<td>
 									{product.item_data.name}
