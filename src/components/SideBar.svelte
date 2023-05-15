@@ -21,15 +21,12 @@
 			title: 'Produits',
 			path: '/product'
 		},
-		{
-			title: 'Utilisateurs',
-			path: '/users'
-		}
 	];
 </script>
 
 <div class="h-full w-full bg-slate-800 text-white flex flex-col px-5">
 	<div class=" h-[10%] w-full">
+        <img src="https://raw.githubusercontent.com/GedeonRO/e-commerce/main/public/assets/images/logo-goodness.png?token=GHSAT0AAAAAABWXVGYNZAHTAQIHPWHLBNDQZDCCC3A" alt="">
 	</div>
 	<div class=" gap-5 h-[90%] flex flex-col overflow-scroll no-bar">
 		{#each items as item}
