@@ -26,7 +26,7 @@
 
 <div class="h-full w-full bg-slate-800 text-white flex flex-col px-5">
 	<div class=" h-[10%] w-full">
-        <img src="https://cdn.discordapp.com/attachments/1001064016925437984/1107621864961998928/icon.png" alt="">
+        <img src="https://cdn.discordapp.com/attachments/1001064016925437984/1107620945188880444/logo-goodness.png" alt="">
 	</div>
 	<div class=" gap-5 h-[90%] flex flex-col overflow-scroll no-bar">
 		{#each items as item}
