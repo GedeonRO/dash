@@ -11,7 +11,6 @@
 	let name = '';
 	let description = '';
 	let featured = true;
-	let image = '';
 	let image_input: HTMLInputElement;
 	let loading = false;
 	let brand = '';
@@ -20,8 +19,8 @@
 	let item = '';
 	let data: Item[] = [];
 	let brands: Brand[] = [];
-    let discount_price: number = 0
-    let is_in_discount: boolean = false
+	let discount_price: number = 0;
+	let is_in_discount: boolean = false;
 	let fields: { name: string; value: string | number }[] = [];
 	onMount(async () => {
 		const server_data = await fetch('https://goodness-api.onrender.com/item').then(
@@ -35,64 +34,71 @@
 	});
 
 	async function create() {
-		loading = true;
-		const formdata = new FormData();
-		formdata.append('file', image_input.files![0]);
-		formdata.append('upload_preset', 'r3nc7tfx');
-		await fetch('https://api.cloudinary.com/v1_1/dmqdfozqg/image/upload', {
-			body: formdata,
-			method: 'POST'
-		})
-			.then(async (res) => {
-				if (res.status === 200) {
-					const { secure_url } = (await res.json()) as { secure_url: string };
-					image = secure_url;
-					$chosen_item_schema.map((field) => {
-						const node = document.getElementsByName(field.name)[0] as HTMLInputElement;
-						fields.push({ name: field.name, value: node.value });
-					});
-					console.log(fields);
-					await fetch(api_url, {
-						method: 'POST',
-						body: JSON.stringify({
-							name,
-							featured,
-							description,
-							images: [image],
-							brand,
-							price,
-							in_stock,
-							pay_at_delivery: false,
-							is_in_discount,
-							discount_price: is_in_discount ? discount_price : null,
-							item,
-							fields: JSON.stringify(fields)
-						}),
-						headers: {
-							Authorization: localStorage.getItem('token')!,
-							'Content-Type': 'application/json'
-						}
-					}).then((res) => {
-						if (res.status === 401) goto('/auth');
-						if (res.status === 201) {
-							window.location.href = '/product';
-							return;
-						}
-						if (res.status === 409) {
-							loading = false;
-							alert('Un item avec le meme nom existe deja');
-							return;
-						}
-						loading = false;
+		try {
+			loading = true;
+			const form_images = image_input.files!;
+			let images: string[] = [];
+			for (let i = 0; i < form_images.length; i++) {
+                const formdata = new FormData()
+                console.log(i)
+				formdata.append('file', image_input.files![i]);
+				formdata.append('upload_preset', 'r3nc7tfx');
+				await fetch('https://api.cloudinary.com/v1_1/dmqdfozqg/image/upload', {
+					body: formdata,
+					method: 'POST'
+				})
+					.then(async (res) => {
+						const { secure_url } = (await res.json()) as { secure_url: string };
+						images.push(secure_url);
+					})
+					.catch((err) => {
+                        loading = false
+						console.log(err);
 						alert('Une erreur est survenue. Reessayer ou contactez les developpeurs');
+						return;
 					});
-				}
-			})
-			.catch((err) => {
-				loading = false;
-				console.log(err);
-				alert("Une erreur s'est produite, veuillez reessayer");
+			}
+			$chosen_item_schema.map((field) => {
+				const node = document.getElementsByName(field.name)[0] as HTMLInputElement;
+				fields.push({ name: field.name, value: node.value });
 			});
+			console.log(fields);
+			const res = await fetch(api_url, {
+				method: 'POST',
+				body: JSON.stringify({
+					name,
+					featured,
+					description,
+					images,
+					brand,
+					price,
+					in_stock,
+					pay_at_delivery: false,
+					is_in_discount,
+					discount_price: is_in_discount ? discount_price : 0,
+					item,
+					fields: JSON.stringify(fields)
+				}),
+				headers: {
+					Authorization: localStorage.getItem('token')!,
+					'Content-Type': 'application/json'
+				}
+			});
+			if (res.status === 401) goto('/auth');
+			if (res.status === 201) {
+				window.location.href = '/product';
+				return;
+			}
+			if (res.status === 409) {
+				loading = false;
+				alert('Un item avec le meme nom existe deja');
+				return;
+			}
+		} catch (err) {
+            loading = false
+			console.log(err);
+			alert('Une erreur est survenue. Reessayer ou contactez les developpeurs');
+		}
 	}
 	function item_changed(id: string) {
 		const item = data.find((it) => it.id === id)!;
@@ -193,6 +199,7 @@
 						bind:this={image_input}
 						required
 						type="file"
+                        multiple
 						accept="image/*"
 						class="focus:outline-none w-[50%] rounded-md p-1"
 						placeholder=""
