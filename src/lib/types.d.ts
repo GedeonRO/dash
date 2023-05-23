@@ -40,7 +40,7 @@ export type Brand = {
 export type Product = {
     id: string,
     name: string,
-    images: string,
+    images: string[],
     price: number,
     is_in_discount: boolean,
     discount_price: number | null,
