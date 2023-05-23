@@ -116,7 +116,7 @@
 							<tr class=" w-full text-xl border-b-2 border-slate-300">
 								<td class="py-5">{product.name}</td>
 								<td class="">
-									<img class=" w-12 h-12" alt="img" src={product.images} loading="lazy" />
+									<img class=" w-12 h-12" alt="img" src={product.images[0]} loading="lazy" />
 								</td>
 								<td>
 									<button
