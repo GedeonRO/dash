@@ -9,6 +9,7 @@
 	import { goto } from '$app/navigation';
     import { show_create_product } from '$lib/store';
 	import { item_being_edited } from '$lib/utils_store';
+	import EditProduct from '../../../modals/EditProduct.svelte';
 	let data: Array<Product> = [];
 	let error = false;
 	const api_url = 'https://goodness-api.onrender.com/product/';
@@ -102,6 +103,7 @@
 							<td>Image</td>
 							<td>Featured</td>
 							<td>Prix</td>
+							<td>Prix en reduction</td>
 							<td>En stock</td>
 							<td>Marque</td>
 							<td>Item</td>
@@ -127,6 +129,9 @@
 								</td>
 								<td>
 									{product.price}
+								</td>
+								<td>
+									{product.is_in_discount? product.discount_price : "-"}
 								</td>
 								<td>
 									{product.in_stock}
