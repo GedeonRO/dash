@@ -7,8 +7,9 @@
 	import type { Brand, Item } from '$lib/types';
 	import { onMount } from 'svelte';
 	import { writable } from 'svelte/store';
-    let chosen_item_schema = writable([] as Array<{name:string, type:string}>)
+	let chosen_item_schema = writable([] as Array<{ name: string; type: string }>);
 	let name = '';
+	let description = '';
 	let featured = true;
 	let image = '';
 	let image_input: HTMLInputElement;
@@ -16,10 +17,12 @@
 	let brand = '';
 	let price = 0;
 	let in_stock = 0;
-    let item = ""
+	let item = '';
 	let data: Item[] = [];
 	let brands: Brand[] = [];
-    let fields:{name:string, value:string|number}[] = []
+    let discount_price: number = 0
+    let is_in_discount: boolean = false
+	let fields: { name: string; value: string | number }[] = [];
 	onMount(async () => {
 		const server_data = await fetch('https://goodness-api.onrender.com/item').then(
 			async (res) => (await res.json()) as { data: Item[] }
@@ -44,25 +47,26 @@
 				if (res.status === 200) {
 					const { secure_url } = (await res.json()) as { secure_url: string };
 					image = secure_url;
-                    $chosen_item_schema.map(field=>{
-                            const node = document.getElementsByName(field.name)[0] as HTMLInputElement
-                            fields.push({ name:field.name, value:node.value })
-                        })
-                    console.log(fields)
+					$chosen_item_schema.map((field) => {
+						const node = document.getElementsByName(field.name)[0] as HTMLInputElement;
+						fields.push({ name: field.name, value: node.value });
+					});
+					console.log(fields);
 					await fetch(api_url, {
 						method: 'POST',
 						body: JSON.stringify({
 							name,
 							featured,
-							images:[image],
+							description,
+							images: [image],
 							brand,
 							price,
 							in_stock,
 							pay_at_delivery: false,
-							is_in_discount: false,
-							discount_price: 0,
-                            item,
-                            fields: JSON.stringify(fields)
+							is_in_discount,
+							discount_price: is_in_discount ? discount_price : null,
+							item,
+							fields: JSON.stringify(fields)
 						}),
 						headers: {
 							Authorization: localStorage.getItem('token')!,
@@ -90,11 +94,11 @@
 				alert("Une erreur s'est produite, veuillez reessayer");
 			});
 	}
-    function item_changed(id: string){
-            const item = data.find(it=>it.id===id)!
-            const parsed = JSON.parse(item.schema) as {name:string, type:string}[]
-            chosen_item_schema.set(parsed)
-        }
+	function item_changed(id: string) {
+		const item = data.find((it) => it.id === id)!;
+		const parsed = JSON.parse(item.schema) as { name: string; type: string }[];
+		chosen_item_schema.set(parsed);
+	}
 </script>
 
 {#if $show_create_product}
@@ -125,6 +129,15 @@
 					/>
 				</div>
 				<div class="w-[80%] flex gap-5 items-center justify-between">
+					<h1 class="text-white w-[40%]">Description</h1>
+					<input
+						bind:value={description}
+						type="text"
+						class="focus:outline-none w-[50%] rounded-md p-1"
+						placeholder=""
+					/>
+				</div>
+				<div class="w-[80%] flex gap-5 items-center justify-between">
 					<h1 class="text-white w-[40%]">Afficher</h1>
 					<label class="relative inline-flex items-center w-[50%] cursor-pointer">
 						<input bind:checked={featured} type="checkbox" value="" class="sr-only peer" />
@@ -143,6 +156,27 @@
 						placeholder=""
 					/>
 				</div>
+				<div class="w-[80%] flex gap-5 items-center justify-between">
+					<h1 class="text-white w-[40%]">Produit en reduction?</h1>
+					<label class="relative inline-flex items-center w-[50%] cursor-pointer">
+						<input bind:checked={is_in_discount} type="checkbox" value="" class="sr-only peer" />
+						<div
+							class="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"
+						/>
+					</label>
+				</div>
+				{#if is_in_discount}
+					<div class="w-[80%] flex gap-5 items-center justify-between">
+						<h1 class="text-white w-[40%]">Prix en reduction</h1>
+						<input
+							bind:value={discount_price}
+							required
+							type="number"
+							class="focus:outline-none w-[50%] rounded-md p-1"
+							placeholder=""
+						/>
+					</div>
+				{/if}
 				<div class="w-[80%] flex gap-5 items-center justify-between">
 					<h1 class="text-white w-[40%]">Quantite en stock</h1>
 					<input
@@ -166,7 +200,7 @@
 				</div>
 				<div class="w-[80%] flex gap-5 items-center justify-between">
 					<h1 class="text-white w-[40%]">Marque</h1>
-					<select required name="" bind:value={brand} class="p-1 w-[50%]" id="">
+					<select name="" bind:value={brand} class="p-1 w-[50%]" id="">
 						{#each brands as brand}
 							<option value={brand.id}>{brand.name}</option>
 						{/each}
@@ -174,20 +208,27 @@
 				</div>
 				<div class="w-[80%] flex gap-5 items-center justify-between">
 					<h1 class="text-white w-[40%]">Item</h1>
-					<select required name="" bind:value={item} on:change={()=>{
-                            item_changed(item)
-                        }}  class="p-1 w-[50%]" id="">
+					<select
+						required
+						name=""
+						bind:value={item}
+						on:change={() => {
+							item_changed(item);
+						}}
+						class="p-1 w-[50%]"
+						id=""
+					>
 						{#each data as item}
 							<option value={item.id}>{item.name}</option>
 						{/each}
 					</select>
 				</div>
-                {#each $chosen_item_schema as field}
-                    <div class="w-[80%] flex gap-5 items-center justify-between" >
-                        <h1 class="text-white w-[40%]">{field.name}</h1>
-                        <input name={field.name} required class="w-[50%] p-1 rounded-md" type={field.type}>
-                    </div>
-                {/each}
+				{#each $chosen_item_schema as field}
+					<div class="w-[80%] flex gap-5 items-center justify-between">
+						<h1 class="text-white w-[40%]">{field.name}</h1>
+						<input name={field.name} required class="w-[50%] p-1 rounded-md" type={field.type} />
+					</div>
+				{/each}
 				<button class="mt-5 flex justify-center bg-slate-700 text-white p-2 rounded-md">
 					{#if loading}
 						<LoadingIcon />
