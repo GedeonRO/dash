@@ -11,7 +11,7 @@
 	import { item_being_edited } from '$lib/utils_store';
 	let data: Array<Item> = [];
 	let error = false;
-	const api_url = 'https://goodness-api.onrender.com/item/';
+    const api_url = `${import.meta.env.VITE_API_URL}/item/`;
 	async function load_data() {
 		loading_hidden.set(false);
 		await fetch(api_url)

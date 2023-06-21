@@ -1,5 +1,6 @@
 <script lang="ts" >
 	import { goto } from "$app/navigation";
+    const API_URL = import.meta.env.VITE_API_URL
     import "../../app.css"
     import LoadingIcon from "../../components/LoadingIcon.svelte";
     let email = ""
@@ -10,7 +11,7 @@
        loading = true
        error = ""
        const response = await fetch(
-           `https://goodness-api.onrender.com/auth/login`,
+           `${API_URL}/auth/login`,
            {
                    method:"POST",
                    body:JSON.stringify({

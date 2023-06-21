@@ -12,7 +12,7 @@
 	import EditProduct from '../../../modals/EditProduct.svelte';
 	let data: Array<Product> = [];
 	let error = false;
-	const api_url = 'https://goodness-api.onrender.com/product/';
+    const api_url = `${import.meta.env.VITE_API_URL}/product/`;
 	async function load_data() {
 		loading_hidden.set(false);
 		await fetch(api_url)

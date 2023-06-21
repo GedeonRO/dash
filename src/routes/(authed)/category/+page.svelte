@@ -10,7 +10,7 @@
 	import { cat_being_edited } from '$lib/utils_store';
 	let data: Array<Category> = [];
 	let error = false;
-    const api_url = 'https://goodness-api.onrender.com/category/';
+    const api_url = `${import.meta.env.VITE_API_URL}/category/`;
     async function load_data(){
 		loading_hidden.set(false);
 		const response = await fetch(api_url);

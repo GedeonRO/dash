@@ -10,7 +10,7 @@
 	import { subcat_being_edited } from '$lib/utils_store';
 	let data: Array<SubCategory> = [];
 	let error = false;
-	const api_url = 'https://goodness-api.onrender.com/subcategory/';
+    const api_url = `${import.meta.env.VITE_API_URL}/subcategory/`;
 	async function load_data() {
 		loading_hidden.set(false);
 		await fetch(api_url)
